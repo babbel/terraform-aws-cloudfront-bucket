@@ -4,12 +4,6 @@ output "bucket" {
   description = "The created bucket"
 }
 
-output "bucket_fullaccess_policy_document" {
-  value = data.aws_iam_policy_document.fullaccess.json
-
-  description = "IAM policy document granting full access to the created bucket"
-}
-
 output "cloudfront_distribution" {
   value = aws_cloudfront_distribution.this
 
