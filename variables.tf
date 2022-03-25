@@ -30,7 +30,7 @@ variable "bucket_name" {
 
 variable "tags" {
   type    = map(string)
-  default = {} # Use structural Object Type in Terraform 0.12
+  default = {}
 
   description = "Tags to be assigned to the S3 bucket and the CloudFront distribution"
 }
