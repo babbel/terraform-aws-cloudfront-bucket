@@ -80,11 +80,11 @@ locals {
   }
 
   acm_viewer_certificate = {
-    acm_certificate_arn            = var.acm_certificate_arn
+    acm_certificate_arn            = try(var.acm_certificate.arn, null)
     cloudfront_default_certificate = false
     minimum_protocol_version       = "TLSv1"
     ssl_support_method             = "sni-only"
   }
 
-  viewer_certificate = var.acm_certificate_arn != null ? local.acm_viewer_certificate : local.default_viewer_certificate
+  viewer_certificate = var.acm_certificate != null ? local.acm_viewer_certificate : local.default_viewer_certificate
 }
