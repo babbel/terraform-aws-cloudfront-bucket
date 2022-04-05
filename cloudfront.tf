@@ -82,7 +82,7 @@ locals {
   acm_viewer_certificate = {
     acm_certificate_arn            = try(var.acm_certificate.arn, null)
     cloudfront_default_certificate = false
-    minimum_protocol_version       = "TLSv1"
+    minimum_protocol_version       = var.acm_certificate_minimum_protocol_version
     ssl_support_method             = "sni-only"
   }
 
