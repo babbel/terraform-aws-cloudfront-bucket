@@ -14,7 +14,7 @@ EOS
 
 variable "acm_certificate_minimum_protocol_version" {
   type    = string
-  default = "TLSv1"
+  default = "TLSv1.3"
 
   description = <<EOS
 The minimum protocol version for the ACM viewer certificate that you want to use with
@@ -22,7 +22,7 @@ the CloudFront distribution.
 Supported protocols and ciphers are documented here:
 https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/secure-connections-supported-viewer-protocols-ciphers.html
 
-If not specified, it defaults to `"TLSv1"`.
+If not specified, it defaults to `"TLSv1.3"`.
 EOS
 }
 
