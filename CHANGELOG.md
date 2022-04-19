@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.0
+
+- [Prefer IAM ARN over CanonicalUser for S3 bucket policy](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/5)
+
 ## v1.0.1
 
 - [Use correct identifier for TLS 1.3](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/3)
