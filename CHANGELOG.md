@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.0
+
+- [Switch back to CanonicalUser, ignoring any policy changes](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/6)
+
 ## v1.1.0
 
 - [Prefer IAM ARN over CanonicalUser for S3 bucket policy](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/5)
