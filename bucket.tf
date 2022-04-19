@@ -8,8 +8,8 @@ data "aws_iam_policy_document" "bucket_policy" {
   statement {
 
     principals {
-      type        = "CanonicalUser"
-      identifiers = [aws_cloudfront_origin_access_identity.this.s3_canonical_user_id]
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.this.iam_arn]
     }
 
     actions   = ["s3:GetObject"]
