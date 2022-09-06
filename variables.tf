@@ -44,6 +44,16 @@ variable "bucket_name" {
   description = "Name of the S3 bucket to create"
 }
 
+variable "default_root_object" {
+  type = string
+
+  # Distributions without default_root_object return an empty string,
+  # so it's best to mimic that behavior to avoid diffs later on.
+  default = ""
+
+  description = "The default root object CloudFront is to request from the S3 bucket as root URL"
+}
+
 variable "tags" {
   type    = map(string)
   default = {}

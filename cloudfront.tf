@@ -6,6 +6,8 @@ resource "aws_cloudfront_distribution" "this" {
 
   http_version = "http2"
 
+  default_root_object = var.default_root_object
+
   origin {
     origin_id   = "S3-${aws_s3_bucket.this.bucket}"
     domain_name = aws_s3_bucket.this.bucket_domain_name
