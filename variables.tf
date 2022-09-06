@@ -45,11 +45,8 @@ variable "bucket_name" {
 }
 
 variable "default_root_object" {
-  type = string
-
-  # Distributions without default_root_object return an empty string,
-  # so it's best to mimic that behavior to avoid diffs later on.
-  default = ""
+  type    = string
+  default = null
 
   description = "The default root object CloudFront is to request from the S3 bucket as root URL"
 }
