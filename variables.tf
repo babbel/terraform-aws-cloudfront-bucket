@@ -44,6 +44,13 @@ variable "bucket_name" {
   description = "Name of the S3 bucket to create"
 }
 
+variable "default_root_object" {
+  type    = string
+  default = null
+
+  description = "The default root object CloudFront is to request from the S3 bucket as root URL"
+}
+
 variable "tags" {
   type    = map(string)
   default = {}
