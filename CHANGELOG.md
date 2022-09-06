@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.3.0
+
+- [Allow specifying a default root object for the distribution](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/9)
+
 ## v1.2.0
 
 - [Switch back to CanonicalUser, ignoring any policy changes](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/6)
