@@ -1,6 +1,6 @@
 # terraform-aws-cloudfront-bucket
 
-This modules creates an S3 bucket with a CloudFront distribution in front.
+This modules creates an S3 bucket with a CloudFront distribution.
 The integration between CloudFront and the S3 bucket is protected,
 and the bucket is set up to be not directly accessible, only via the CDN.
 
