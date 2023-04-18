@@ -12,9 +12,7 @@ resource "aws_cloudfront_distribution" "this" {
     origin_id   = "S3-${aws_s3_bucket.this.bucket}"
     domain_name = aws_s3_bucket.this.bucket_domain_name
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.this.cloudfront_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.this.id
   }
 
   default_cache_behavior {
@@ -69,10 +67,6 @@ resource "aws_cloudfront_distribution" "this" {
   tags = var.tags
 }
 
-resource "aws_cloudfront_origin_access_identity" "this" {
-  comment = aws_s3_bucket.this.bucket
-}
-
 locals {
   default_viewer_certificate = {
     acm_certificate_arn            = null
@@ -89,4 +83,13 @@ locals {
   }
 
   viewer_certificate = var.acm_certificate != null ? local.acm_viewer_certificate : local.default_viewer_certificate
+}
+
+resource "aws_cloudfront_origin_access_control" "this" {
+  name        = aws_s3_bucket.this.bucket
+  description = var.aliases != null ? join(", ", var.aliases) : aws_s3_bucket.this.bucket
+
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
 }

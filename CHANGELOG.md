@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.0
+
+- [Replace CloudFront origin access identity (OAI) with origin access control (OAC)](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/14)
+
 ## v1.3.0
 
 - [Allow specifying a default root object for the distribution](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/9)
