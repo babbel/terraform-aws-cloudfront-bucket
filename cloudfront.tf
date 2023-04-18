@@ -67,10 +67,6 @@ resource "aws_cloudfront_distribution" "this" {
   tags = var.tags
 }
 
-resource "aws_cloudfront_origin_access_identity" "this" {
-  comment = aws_s3_bucket.this.bucket
-}
-
 locals {
   default_viewer_certificate = {
     acm_certificate_arn            = null

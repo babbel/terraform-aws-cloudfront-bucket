@@ -20,17 +20,6 @@ data "aws_iam_policy_document" "bucket_policy" {
       values   = [aws_cloudfront_distribution.this.arn]
     }
   }
-
-  statement {
-
-    principals {
-      type        = "CanonicalUser"
-      identifiers = [aws_cloudfront_origin_access_identity.this.s3_canonical_user_id]
-    }
-
-    actions   = ["s3:GetObject"]
-    resources = ["${aws_s3_bucket.this.arn}/*"]
-  }
 }
 
 resource "aws_s3_bucket_policy" "this" {
