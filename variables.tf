@@ -51,6 +51,13 @@ variable "default_root_object" {
   description = "The default root object CloudFront is to request from the S3 bucket as root URL"
 }
 
+variable "http_version" {
+  type    = string
+  default = "http2"
+
+  description = "Supported HTTP versions set on the CloudFront distribution"
+}
+
 variable "tags" {
   type    = map(string)
   default = {}
@@ -72,12 +79,4 @@ variable "ttl" {
   }
 
   description = "The min, default and max TTLs set on the CloudFront distribution"
-}
-
-
-variable "http_version" {
-  type    = string
-  default = "http2"
-
-  description = "Supported HTTP versions set on the CloudFront distribution"
 }
