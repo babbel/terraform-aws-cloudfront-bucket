@@ -4,7 +4,7 @@ resource "aws_cloudfront_distribution" "this" {
 
   aliases = var.aliases
 
-  http_version = "http2"
+  http_version = var.http_version
 
   default_root_object = var.default_root_object
 

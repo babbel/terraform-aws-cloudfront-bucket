@@ -1,5 +1,5 @@
 variable "acm_certificate" {
-  type    = object({
+  type = object({
     arn = string
   })
   default = null
@@ -72,4 +72,12 @@ variable "ttl" {
   }
 
   description = "The min, default and max TTLs set on the CloudFront distribution"
+}
+
+
+variable "http_version" {
+  type    = string
+  default = "http2"
+
+  description = "Supported HTTP versions set on the CloudFront distribution"
 }
