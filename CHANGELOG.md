@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.0
+
+- [Allow specifying a default http_version for the distribution](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/15)
+
 ## v1.4.0
 
 - [Replace CloudFront origin access identity (OAI) with origin access control (OAC)](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/14)
