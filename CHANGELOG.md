@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.6.0
+
+- [Relax version constraints for modules](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/17)
+
 ## v1.5.0
 
 - [Allow specifying a default http_version for the distribution](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/15)
