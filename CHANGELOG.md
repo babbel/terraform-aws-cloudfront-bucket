@@ -1,5 +1,10 @@
 # Changelog
 
+# NOTE: CHANGELOG.md is deprecated
+
+After the release of v1.6.0, please see the [GitHub release notes](https://github.com/babbel/terraform-aws-athena/releases)
+for the module in order to view the most up-to-date changes.
+
 ## v1.6.0
 
 - [Relax version constraints for modules](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/17)
