@@ -1,5 +1,3 @@
-# Changelog
-
 # NOTE: CHANGELOG.md is deprecated
 
 After the release of v1.6.0, please see the [GitHub release notes](https://github.com/babbel/terraform-aws-athena/releases)
