@@ -67,7 +67,12 @@ variable "tags" {
 
 
 variable "trusted_key_groups" {
-  type    = list(string)
+  type = list(
+    object({
+      id = string
+    })
+  )
+
   default = null
 
   description = "List of AWS Key Groups to trust for CloudFront distribution's default cache behavior"
