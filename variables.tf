@@ -65,6 +65,14 @@ variable "tags" {
   description = "Tags to be assigned to the S3 bucket and the CloudFront distribution"
 }
 
+
+variable "trusted_key_groups" {
+  type    = list(string)
+  default = null
+
+  description = "List of AWS Key Groups to trust for CloudFront distribution's default cache behavior"
+}
+
 variable "ttl" {
   type = object({
     min     = number

@@ -19,6 +19,8 @@ resource "aws_cloudfront_distribution" "this" {
     target_origin_id       = "S3-${aws_s3_bucket.this.bucket}"
     viewer_protocol_policy = "https-only"
 
+    trusted_key_groups = var.trusted_key_groups
+
     allowed_methods = [
       "GET",
       "HEAD",
