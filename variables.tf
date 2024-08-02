@@ -61,7 +61,7 @@ variable "function_association" {
 
   default = null
 
-  description = "Cloudfront functions (maximum 2) that trigger on specific event_types"
+  description = "CloudFront functions (maximum 2) that trigger on specific `event_type`"
 }
 
 variable "http_version" {
