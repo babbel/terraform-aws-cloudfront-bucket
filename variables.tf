@@ -51,6 +51,19 @@ variable "default_root_object" {
   description = "The default root object CloudFront is to request from the S3 bucket as root URL"
 }
 
+variable "function_association" {
+  type = list(
+    object({
+      event_type   = string
+      function_arn = string
+    })
+  )
+
+  default = null
+
+  description = "Cloudfront functions (maximum 2) that trigger on specific event_types"
+}
+
 variable "http_version" {
   type    = string
   default = "http2"

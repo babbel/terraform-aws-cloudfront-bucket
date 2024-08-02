@@ -16,4 +16,9 @@ module "s3-bucket-with-cloudfront-with-custom-cert" {
   acm_certificate = {
     arn = "arn:aws:acm:eu-west-1:123456789012:certificate/12345678-1234-1234-1234-123456789012"
   }
+
+  function_association = [{
+    event_type   = "viewer-request"
+    function_arn = "arn:aws:cloudfront::390571511014:function/my-function"
+  }]
 }

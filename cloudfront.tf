@@ -50,6 +50,16 @@ resource "aws_cloudfront_distribution" "this" {
     max_ttl     = var.ttl.max
 
     compress = true
+
+
+    dynamic "function_association" {
+      for_each = var.function_association
+
+      content {
+        event_type   = function_association.event_type
+        function_arn = function_association.function_arn
+      }
+    }
   }
 
   viewer_certificate {
