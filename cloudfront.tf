@@ -51,7 +51,6 @@ resource "aws_cloudfront_distribution" "this" {
 
     compress = true
 
-
     dynamic "function_association" {
       for_each = var.function_association
 
