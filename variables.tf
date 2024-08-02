@@ -59,7 +59,7 @@ variable "function_association" {
     })
   )
 
-  default = null
+  default = []
 
   description = "CloudFront functions (maximum 2) that trigger on specific `event_type`"
 }
