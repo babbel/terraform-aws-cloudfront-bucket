@@ -50,6 +50,17 @@ resource "aws_cloudfront_distribution" "this" {
     max_ttl     = var.ttl.max
 
     compress = true
+
+    dynamic "custom_error_response" {
+      for_each = var.custom_error_response
+
+      content {
+        error_caching_min_ttl = custom_error_response.error_caching_min_ttl
+        error_code            = custom_error_response.error_code
+        response_code         = custom_error_response.response_code
+        response_page_path    = custom_error_response.response_page_path
+      }
+    }
   }
 
   viewer_certificate {
