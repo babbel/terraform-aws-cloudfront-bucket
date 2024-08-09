@@ -44,6 +44,21 @@ variable "bucket_name" {
   description = "Name of the S3 bucket to create"
 }
 
+variable "custom_error_response" {
+  type = list(
+    object({
+      error_caching_min_ttl = number
+      error_code            = number
+      response_code         = number
+      response_page_path    = string
+    })
+  )
+
+  default = []
+
+  description = "One or more custom error response elements to be used for the CloudFront distribution"
+}
+
 variable "default_root_object" {
   type    = string
   default = null
