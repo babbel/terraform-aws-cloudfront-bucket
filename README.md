@@ -12,9 +12,5 @@ module "cloudfront-bucket-example" {
   version = "~> 1.0"
 
   bucket_name = "foo"
-
-  tags = {
-    environment = "production"
-  }
 }
 ```

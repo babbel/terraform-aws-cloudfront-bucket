@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
 
-  tags = var.tags
+  tags = marge(var.default_tags, var.cloudfront_distribution_tags)
 }
 
 locals {

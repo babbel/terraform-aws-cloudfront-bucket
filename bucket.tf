@@ -1,7 +1,7 @@
 resource "aws_s3_bucket" "this" {
-  bucket = var.bucket_name
+  bucket = var.s3_bucket_name
 
-  tags = var.tags
+  tags = merge(var.default_tags, var.s3_bucket_tags)
 }
 
 data "aws_iam_policy_document" "bucket_policy" {
