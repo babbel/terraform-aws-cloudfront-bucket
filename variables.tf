@@ -51,7 +51,7 @@ variable "cloudfront_distribution_tags" {
   default = {}
 
   description = <<EOS
-Map of tags assigned to the CloudFront distribution created by this module.
+Map of tags assigned to the CloudFront distribution created by this module. Tags in this map will override tags in `var.default_tags`.
 EOS
 }
 
@@ -103,7 +103,7 @@ variable "s3_bucket_tags" {
   default = {}
 
   description = <<EOS
-Map of tags assigned to the S3 bucket created by this module.
+Map of tags assigned to the S3 bucket created by this module. Tags in this map will override tags in `var.default_tags`.
 EOS
 }
 
