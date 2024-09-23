@@ -41,7 +41,9 @@ EOS
 variable "bucket_name" {
   type = string
 
-  description = "Name of the S3 bucket to create"
+  description = <<EOS
+Name of the S3 bucket to create.
+EOS
 }
 
 variable "custom_error_response" {
@@ -53,31 +55,38 @@ variable "custom_error_response" {
       response_page_path    = string
     })
   )
-
   default = []
 
-  description = "One or more custom error response elements to be used for the CloudFront distribution"
+  description = <<EOS
+One or more custom error response elements to be used for the CloudFront distribution.
+EOS
 }
 
 variable "default_root_object" {
   type    = string
   default = null
 
-  description = "The default root object CloudFront is to request from the S3 bucket as root URL"
+  description = <<EOS
+The default root object CloudFront is to request from the S3 bucket as root URL.
+EOS
 }
 
 variable "http_version" {
   type    = string
   default = "http2"
 
-  description = "Supported HTTP versions set on the CloudFront distribution"
+  description = <<EOS
+Supported HTTP versions set on the CloudFront distribution.
+EOS
 }
 
 variable "tags" {
   type    = map(string)
   default = {}
 
-  description = "Tags to be assigned to the S3 bucket and the CloudFront distribution"
+  description = <<EOS
+Map of tags assigned to all AWS resources created by this module.
+EOS
 }
 
 
@@ -87,10 +96,11 @@ variable "trusted_key_groups" {
       id = string
     })
   )
-
   default = null
 
-  description = "List of AWS Key Groups to trust for CloudFront distribution's default cache behavior"
+  description = <<EOS
+List of AWS Key Groups to trust for CloudFront distribution's default cache behavior.
+EOS
 }
 
 variable "ttl" {
@@ -99,12 +109,13 @@ variable "ttl" {
     default = number
     max     = number
   })
-
   default = {
     min     = 0
     default = 86400
     max     = 31536000
   }
 
-  description = "The min, default and max TTLs set on the CloudFront distribution"
+  description = <<EOS
+The min, default and max TTLs set on the CloudFront distribution.
+EOS
 }
