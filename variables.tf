@@ -71,16 +71,7 @@ The default root object CloudFront is to request from the S3 bucket as root URL.
 EOS
 }
 
-variable "http_version" {
-  type    = string
-  default = "http2"
-
-  description = <<EOS
-Supported HTTP versions set on the CloudFront distribution.
-EOS
-}
-
-variable "tags" {
+variable "default_tags" {
   type    = map(string)
   default = {}
 
@@ -89,6 +80,14 @@ Map of tags assigned to all AWS resources created by this module.
 EOS
 }
 
+variable "http_version" {
+  type    = string
+  default = "http2"
+
+  description = <<EOS
+Supported HTTP versions set on the CloudFront distribution.
+EOS
+}
 
 variable "trusted_key_groups" {
   type = list(
