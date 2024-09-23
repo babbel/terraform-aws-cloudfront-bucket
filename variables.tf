@@ -46,6 +46,15 @@ Name of the S3 bucket to create.
 EOS
 }
 
+variable "cloudfront_distribution_tags" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of tags assigned to the CloudFront distribution created by this module.
+EOS
+}
+
 variable "custom_error_response" {
   type = list(
     object({
@@ -86,6 +95,15 @@ variable "http_version" {
 
   description = <<EOS
 Supported HTTP versions set on the CloudFront distribution.
+EOS
+}
+
+variable "s3_bucket_tags" {
+  type    = map(string)
+  default = {}
+
+  description = <<EOS
+Map of tags assigned to the S3 bucket created by this module.
 EOS
 }
 
