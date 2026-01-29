@@ -136,3 +136,16 @@ variable "ttl" {
 The min, default and max TTLs set on the CloudFront distribution.
 EOS
 }
+
+variable "web_acl_id" {
+  type    = string
+  default = null
+
+  description = <<EOS
+The ARN of the WAFv2 Web ACL to associate with the CloudFront distribution.
+This enables AWS WAF protection for the distribution.
+
+Example:
+  web_acl_id = aws_wafv2_web_acl.example.arn
+EOS
+}

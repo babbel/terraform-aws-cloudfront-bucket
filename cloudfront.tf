@@ -8,6 +8,8 @@ resource "aws_cloudfront_distribution" "this" {
 
   default_root_object = var.default_root_object
 
+  web_acl_id = var.web_acl_id
+
   origin {
     origin_id   = "S3-${aws_s3_bucket.this.bucket}"
     domain_name = aws_s3_bucket.this.bucket_domain_name
