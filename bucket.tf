@@ -22,6 +22,13 @@ data "aws_iam_policy_document" "bucket_policy" {
   }
 }
 
+resource "aws_s3_bucket_abac" "this" {
+  bucket = aws_s3_bucket.this.bucket
+  abac_status {
+    status = "Enabled"
+  }
+}
+
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.bucket
   policy = data.aws_iam_policy_document.bucket_policy.json
