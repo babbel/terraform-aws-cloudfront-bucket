@@ -119,7 +119,6 @@ resource "aws_cloudfront_distribution" "this" {
 locals {
   default_s3_origin_id  = "S3-${var.bucket_name}"
   additional_origin_ids = [for origin in var.additional_origins : origin.origin_id]
-  all_origin_ids        = concat([local.default_s3_origin_id], local.additional_origin_ids)
 
   default_viewer_certificate = {
     acm_certificate_arn            = null

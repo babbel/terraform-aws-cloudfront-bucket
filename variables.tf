@@ -151,7 +151,7 @@ EOS
       for origin in var.additional_origins : origin
       if !contains(["http-only", "https-only", "match-viewer"], origin.custom_origin_config.origin_protocol_policy)
     ]) == 0
-    error_message = "additional_origins.custom_origin_config.origin_protocol_policy must be one of: http-only, https-only, match-viewer."
+    error_message = "Each additional origin custom origin protocol policy must be one of: http-only, https-only, or match-viewer."
   }
 }
 
@@ -197,7 +197,7 @@ EOS
       for behavior in var.ordered_cache_behaviors : behavior
       if !contains(["allow-all", "https-only", "redirect-to-https"], behavior.viewer_protocol_policy)
     ]) == 0
-    error_message = "ordered_cache_behaviors.viewer_protocol_policy must be one of: allow-all, https-only, redirect-to-https."
+    error_message = "Each ordered cache behavior viewer protocol policy must be one of: allow-all, https-only, or redirect-to-https."
   }
 
   validation {
