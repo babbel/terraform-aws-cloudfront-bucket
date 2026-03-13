@@ -11,14 +11,30 @@ resource "aws_cloudfront_distribution" "this" {
   web_acl_id = var.web_acl_id
 
   origin {
-    origin_id   = "S3-${aws_s3_bucket.this.bucket}"
+    origin_id   = local.default_s3_origin_id
     domain_name = aws_s3_bucket.this.bucket_domain_name
 
     origin_access_control_id = aws_cloudfront_origin_access_control.this.id
   }
 
+  dynamic "origin" {
+    for_each = var.additional_origins
+
+    content {
+      origin_id   = origin.value.origin_id
+      domain_name = origin.value.domain_name
+
+      custom_origin_config {
+        http_port              = origin.value.custom_origin_config.http_port
+        https_port             = origin.value.custom_origin_config.https_port
+        origin_protocol_policy = origin.value.custom_origin_config.origin_protocol_policy
+        origin_ssl_protocols   = origin.value.custom_origin_config.origin_ssl_protocols
+      }
+    }
+  }
+
   default_cache_behavior {
-    target_origin_id       = "S3-${aws_s3_bucket.this.bucket}"
+    target_origin_id       = local.default_s3_origin_id
     viewer_protocol_policy = "https-only"
 
     trusted_key_groups = var.trusted_key_groups == null ? null : var.trusted_key_groups[*].id
@@ -54,6 +70,24 @@ resource "aws_cloudfront_distribution" "this" {
     compress = true
   }
 
+  dynamic "ordered_cache_behavior" {
+    for_each = var.ordered_cache_behaviors
+
+    content {
+      path_pattern           = ordered_cache_behavior.value.path_pattern
+      target_origin_id       = ordered_cache_behavior.value.target_origin_id
+      viewer_protocol_policy = ordered_cache_behavior.value.viewer_protocol_policy
+      allowed_methods        = ordered_cache_behavior.value.allowed_methods
+      cached_methods         = ordered_cache_behavior.value.cached_methods
+      compress               = ordered_cache_behavior.value.compress
+      cache_policy_id        = ordered_cache_behavior.value.cache_policy_id
+
+      origin_request_policy_id   = ordered_cache_behavior.value.origin_request_policy_id
+      response_headers_policy_id = ordered_cache_behavior.value.response_headers_policy_id
+      trusted_key_groups         = ordered_cache_behavior.value.trusted_key_groups
+    }
+  }
+
   viewer_certificate {
     acm_certificate_arn            = local.viewer_certificate.acm_certificate_arn
     cloudfront_default_certificate = local.viewer_certificate.cloudfront_default_certificate
@@ -83,6 +117,8 @@ resource "aws_cloudfront_distribution" "this" {
 }
 
 locals {
+  default_s3_origin_id = "S3-${var.bucket_name}"
+
   default_viewer_certificate = {
     acm_certificate_arn            = null
     cloudfront_default_certificate = true
