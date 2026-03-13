@@ -3,6 +3,10 @@
 After the release of v1.6.0, please see the [GitHub release notes](https://github.com/babbel/terraform-aws-cloudfront-bucket/releases)
 for the module in order to view the most up-to-date changes.
 
+## v2.2.0
+
+- Add optional support for additional custom origins and ordered cache behaviors for path-based routing while keeping default S3 behavior backward compatible.
+
 ## v1.6.0
 
 - [Relax version constraints for modules](https://github.com/babbel/terraform-aws-cloudfront-bucket/pull/17)
