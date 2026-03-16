@@ -11,7 +11,7 @@ resource "aws_cloudfront_distribution" "this" {
   web_acl_id = var.web_acl_id
 
   origin {
-    origin_id   = local.default_s3_origin_id
+    origin_id   = "S3-${aws_s3_bucket.this.bucket}"
     domain_name = aws_s3_bucket.this.bucket_domain_name
 
     origin_access_control_id = aws_cloudfront_origin_access_control.this.id
@@ -34,7 +34,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   default_cache_behavior {
-    target_origin_id       = local.default_s3_origin_id
+    target_origin_id       = "S3-${aws_s3_bucket.this.bucket}"
     viewer_protocol_policy = "https-only"
 
     trusted_key_groups = var.trusted_key_groups == null ? null : var.trusted_key_groups[*].id
@@ -117,8 +117,6 @@ resource "aws_cloudfront_distribution" "this" {
 }
 
 locals {
-  default_s3_origin_id = "S3-${var.bucket_name}"
-
   default_viewer_certificate = {
     acm_certificate_arn            = null
     cloudfront_default_certificate = true
