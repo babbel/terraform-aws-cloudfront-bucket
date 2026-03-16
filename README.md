@@ -47,3 +47,53 @@ module "cloudfront-bucket-example" {
   web_acl_id  = aws_wafv2_web_acl.example.arn
 }
 ```
+
+## Example with path-based routing to a custom origin
+
+```tf
+data "aws_cloudfront_cache_policy" "caching_disabled" {
+  name = "Managed-CachingDisabled"
+}
+
+module "cloudfront-bucket-example" {
+  source  = "babbel/cloudfront-bucket/aws"
+  version = "~> 2.2"
+
+  bucket_name = "foo"
+
+  additional_origins = [
+    {
+      origin_id   = "edge-origin"
+      domain_name = "gtm-123456.fps.goog"
+      custom_origin_config = {
+        http_port              = 80
+        https_port             = 443
+        origin_protocol_policy = "https-only"
+        origin_ssl_protocols   = ["TLSv1.2"]
+      }
+    }
+  ]
+
+  ordered_cache_behaviors = [
+    {
+      path_pattern               = "/edge/*"
+      target_origin_id           = "edge-origin"
+      viewer_protocol_policy     = "https-only"
+      allowed_methods            = ["GET", "HEAD", "OPTIONS"]
+      cached_methods             = ["GET", "HEAD"]
+      compress                   = true
+      cache_policy_id            = data.aws_cloudfront_cache_policy.caching_disabled.id
+      origin_request_policy_id   = "00000000-0000-0000-0000-000000000000"
+      response_headers_policy_id = null
+      trusted_key_groups         = []
+    }
+  ]
+}
+```
+
+## New optional inputs
+
+- `additional_origins`: Adds non-S3 origins to the CloudFront distribution.
+- `ordered_cache_behaviors`: Adds path-based routing to default S3 or additional origins.
+
+When omitted, both inputs default to `[]`, so existing consumers keep the same behavior.

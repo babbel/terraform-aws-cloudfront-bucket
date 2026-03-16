@@ -120,6 +120,95 @@ List of AWS Key Groups to trust for CloudFront distribution's default cache beha
 EOS
 }
 
+variable "additional_origins" {
+  type = list(
+    object({
+      origin_id   = string
+      domain_name = string
+      custom_origin_config = object({
+        http_port              = number
+        https_port             = number
+        origin_protocol_policy = string
+        origin_ssl_protocols   = list(string)
+      })
+    })
+  )
+  default = []
+
+  description = <<EOS
+Additional non-S3 origins to attach to the CloudFront distribution.
+Each origin must provide a unique `origin_id` that can be referenced by
+`ordered_cache_behaviors[*].target_origin_id`.
+EOS
+
+  validation {
+    condition     = length(distinct([for origin in var.additional_origins : origin.origin_id])) == length(var.additional_origins)
+    error_message = "Each additional_origins.origin_id must be unique."
+  }
+
+  validation {
+    condition = length([
+      for origin in var.additional_origins : origin
+      if !contains(["http-only", "https-only", "match-viewer"], origin.custom_origin_config.origin_protocol_policy)
+    ]) == 0
+    error_message = "Each additional origin custom origin protocol policy must be one of: http-only, https-only, or match-viewer."
+  }
+}
+
+variable "ordered_cache_behaviors" {
+  type = list(
+    object({
+      path_pattern               = string
+      target_origin_id           = string
+      viewer_protocol_policy     = string
+      allowed_methods            = list(string)
+      cached_methods             = list(string)
+      compress                   = bool
+      cache_policy_id            = string
+      origin_request_policy_id   = string
+      response_headers_policy_id = string
+      trusted_key_groups         = list(string)
+    })
+  )
+  default = []
+
+  description = <<EOS
+Additional ordered cache behaviors for path-based routing.
+For compatibility with older Terraform versions, set optional fields to `null` when unused:
+`origin_request_policy_id`, `response_headers_policy_id`.
+Use an empty list for `trusted_key_groups` when unused.
+EOS
+
+  validation {
+    condition     = length(distinct([for behavior in var.ordered_cache_behaviors : behavior.path_pattern])) == length(var.ordered_cache_behaviors)
+    error_message = "Each ordered_cache_behaviors.path_pattern must be unique."
+  }
+
+  validation {
+    condition = length([
+      for behavior in var.ordered_cache_behaviors : behavior
+      if !can(regex("^/", behavior.path_pattern))
+    ]) == 0
+    error_message = "Each ordered_cache_behaviors.path_pattern must start with '/'."
+  }
+
+  validation {
+    condition = length([
+      for behavior in var.ordered_cache_behaviors : behavior
+      if !contains(["allow-all", "https-only", "redirect-to-https"], behavior.viewer_protocol_policy)
+    ]) == 0
+    error_message = "Each ordered cache behavior viewer protocol policy must be one of: allow-all, https-only, or redirect-to-https."
+  }
+
+  validation {
+    condition = length([
+      for behavior in var.ordered_cache_behaviors : behavior
+      if length(setsubtract(toset(behavior.cached_methods), toset(behavior.allowed_methods))) > 0
+    ]) == 0
+    error_message = "Each ordered_cache_behaviors.cached_methods must be a subset of allowed_methods."
+  }
+}
+
 variable "ttl" {
   type = object({
     min     = number
