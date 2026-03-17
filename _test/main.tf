@@ -25,6 +25,14 @@ module "s3-bucket-with-cloudfront-with-custom-cert" {
   }]
 }
 
+module "s3-bucket-with-cloudfront-with-cors" {
+  source = "./.."
+
+  bucket_name = "example-with-cors"
+
+  response_headers_policy_id = "60669652-455b-4ae9-85a4-c4c02393f86c"
+}
+
 module "s3-bucket-with-cloudfront-with-path-routing" {
   source = "./.."
 

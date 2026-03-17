@@ -120,6 +120,17 @@ List of AWS Key Groups to trust for CloudFront distribution's default cache beha
 EOS
 }
 
+variable "response_headers_policy_id" {
+  type    = string
+  default = null
+
+  description = <<EOS
+The ID of a CloudFront response headers policy to attach to the default cache behavior.
+When set, CloudFront injects the configured response headers (e.g. CORS, security headers)
+into every response served by the default (S3) origin.
+EOS
+}
+
 variable "additional_origins" {
   type = list(
     object({

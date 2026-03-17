@@ -48,6 +48,23 @@ module "cloudfront-bucket-example" {
 }
 ```
 
+## Example with CORS response headers
+
+```tf
+data "aws_cloudfront_response_headers_policy" "simple_cors" {
+  name = "Managed-SimpleCORS"
+}
+
+module "cloudfront-bucket-example" {
+  source  = "babbel/cloudfront-bucket/aws"
+  version = "~> 2.2"
+
+  bucket_name = "foo"
+
+  response_headers_policy_id = data.aws_cloudfront_response_headers_policy.simple_cors.id
+}
+```
+
 ## Example with path-based routing to a custom origin
 
 ```tf
@@ -93,7 +110,8 @@ module "cloudfront-bucket-example" {
 
 ## New optional inputs
 
+- `response_headers_policy_id`: Attaches a CloudFront response headers policy to the default cache behavior. Useful for injecting CORS or security headers on all S3-served responses. Defaults to `null`.
 - `additional_origins`: Adds non-S3 origins to the CloudFront distribution.
 - `ordered_cache_behaviors`: Adds path-based routing to default S3 or additional origins.
 
-When omitted, both inputs default to `[]`, so existing consumers keep the same behavior.
+When omitted, all inputs default to `null` or `[]`, so existing consumers keep the same behavior.
