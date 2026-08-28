@@ -58,3 +58,27 @@ module "s3-bucket-with-cloudfront-with-path-routing" {
     }
   ]
 }
+
+data "aws_iam_policy_document" "example-bucket-write" {
+  statement {
+    sid = "example-bucket-write"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::123456789012:root"]
+    }
+
+    actions   = ["s3:PutObject"]
+    resources = ["arn:aws:s3:::example-with-additional-bucket-policy/*"]
+  }
+}
+
+module "s3-bucket-with-cloudfront-with-additional-bucket-policy" {
+  source = "./.."
+
+  bucket_name = "example-with-additional-bucket-policy"
+
+  additional_bucket_policy_documents = [
+    data.aws_iam_policy_document.example-bucket-write.json
+  ]
+}
