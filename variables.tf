@@ -120,6 +120,25 @@ List of AWS Key Groups to trust for CloudFront distribution's default cache beha
 EOS
 }
 
+variable "additional_bucket_policy_documents" {
+  type    = list(string)
+  default = []
+
+  description = <<EOS
+List of IAM policy documents, in JSON, to merge into the bucket policy managed by this module.
+
+Use this instead of declaring your own `aws_s3_bucket_policy` for the bucket: a bucket has exactly
+one policy, so a second `aws_s3_bucket_policy` resource overwrites the policy managed here on every
+apply, and the two resources then permanently revert each other.
+
+The documents are merged via `source_policy_documents`, which merges statements that share a `sid`,
+so give each of your statements a `sid` that is unique within the resulting policy.
+
+Example:
+  additional_bucket_policy_documents = [data.aws_iam_policy_document.bucket-write.json]
+EOS
+}
+
 variable "additional_origins" {
   type = list(
     object({

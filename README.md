@@ -91,9 +91,44 @@ module "cloudfront-bucket-example" {
 }
 ```
 
+## Example with additional bucket policy statements
+
+The module manages the bucket policy that grants its CloudFront distribution read access.
+A bucket has exactly one policy, so declaring a second `aws_s3_bucket_policy` for the same
+bucket outside of the module makes the two resources overwrite each other on every apply.
+Pass extra statements in instead:
+
+```tf
+data "aws_iam_policy_document" "example-write" {
+  statement {
+    sid = "example-write"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::123456789012:root"]
+    }
+
+    actions   = ["s3:PutObject"]
+    resources = ["${module.cloudfront-bucket-example.bucket.arn}/*"]
+  }
+}
+
+module "cloudfront-bucket-example" {
+  source  = "babbel/cloudfront-bucket/aws"
+  version = "~> 2.2"
+
+  bucket_name = "foo"
+
+  additional_bucket_policy_documents = [
+    data.aws_iam_policy_document.example-write.json
+  ]
+}
+```
+
 ## New optional inputs
 
+- `additional_bucket_policy_documents`: Merges extra statements into the bucket policy managed by the module.
 - `additional_origins`: Adds non-S3 origins to the CloudFront distribution.
 - `ordered_cache_behaviors`: Adds path-based routing to default S3 or additional origins.
 
-When omitted, both inputs default to `[]`, so existing consumers keep the same behavior.
+When omitted, these inputs default to `[]`, so existing consumers keep the same behavior.

@@ -29,7 +29,14 @@ resource "aws_s3_bucket_abac" "this" {
   }
 }
 
+data "aws_iam_policy_document" "combined_bucket_policy" {
+  source_policy_documents = concat(
+    [data.aws_iam_policy_document.bucket_policy.json],
+    var.additional_bucket_policy_documents,
+  )
+}
+
 resource "aws_s3_bucket_policy" "this" {
   bucket = aws_s3_bucket.this.bucket
-  policy = data.aws_iam_policy_document.bucket_policy.json
+  policy = data.aws_iam_policy_document.combined_bucket_policy.json
 }
